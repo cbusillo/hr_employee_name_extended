@@ -6,11 +6,11 @@
         <field name="inherit_id" ref="hr.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//form" position="inside">
-                <group string="Employee Names (Codex)">
+                <group string="Employee Names">
                     <group>
                         <field name="user_name_format" widget="radio"/>
                     </group>
-                    <group attrs="{'invisible': [('user_name_format', '!=', 'custom')]}">
+                    <group invisible="user_name_format != 'custom'">
                         <field name="user_name_custom_pattern" placeholder="{last_name}, {first_name} ({nickname})"/>
                     </group>
                 </group>
