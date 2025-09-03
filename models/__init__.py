@@ -1,0 +1,4 @@
+from . import hr_employee
+from . import res_users
+from . import res_partner
+from . import name_sync
