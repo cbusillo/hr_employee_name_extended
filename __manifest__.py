@@ -26,6 +26,8 @@
         "security/ir.model.access.csv",
         "views/hr_employee_views.xml",
         "views/res_config_settings_views.xml",
+        "data/server_actions.xml",
+        "data/menu.xml",
     ],
     "post_init_hook": "post_init_hook",
     "installable": True,

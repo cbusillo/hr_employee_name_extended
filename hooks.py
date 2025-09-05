@@ -9,10 +9,10 @@ def _initialize_employee_names(env: Environment) -> None:
     fmt = (icp.get_param("user_name_extended.format") or "western").strip().lower()
 
     domain = ["|", ("first_name", "=", False), ("last_name", "=", False)]
-    offset = 0
     step = 200
+    last_id = 0
     while True:
-        employees = Employee.search(domain, limit=step, offset=offset, order="id")
+        employees = Employee.search(domain + [("id", ">", last_id)], limit=step, order="id")
         if not employees:
             break
         for employee in employees:
@@ -31,7 +31,7 @@ def _initialize_employee_names(env: Environment) -> None:
                 employee.with_context(skip_name_propagation=True).write({"nick_name": employee.first_name})
         if len(employees) < step:
             break
-        offset += step
+        last_id = employees[-1].id
 
 
 def post_init_hook(env: "Environment") -> None:

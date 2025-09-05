@@ -19,7 +19,7 @@
                     <field name="last_name" required="1" string="Last Name (Family/Surname)"/>
                     <field name="nick_name" string="Nickname"/>
                     <field name="name_format" string="Name Format"/>
-                    <field name="display_name" readonly="1" string="Display Name"/>
+                    <!-- display_name now derives from name_get; omit explicit field -->
                 </group>
             </xpath>
         </field>

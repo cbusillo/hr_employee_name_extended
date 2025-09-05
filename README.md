@@ -9,6 +9,7 @@ Structured first/last/nickname fields for `hr.employee` with locale-aware format
 - Locale-aware formatting: western (First Last) or asian (Last First)
 - Per-employee override (`name_format`) with optional default from Settings
 - Search across `name`, `first_name`, `last_name`, `nick_name`
+- Display uses `name_get`: shows `Nickname (First Last)` when nickname differs; no stored `display_name`
 - No cross-model side effects by default; partner/users sync remains opt-in via context
 
 ## Settings (HR)
@@ -18,6 +19,12 @@ Structured first/last/nickname fields for `hr.employee` with locale-aware format
 
 Defaults apply only when creating a new employee; runtime compute/inverse always respect the per-employee override.
 
+## Admin Tools
+
+- Server Action: "Recompute Employee Names" calls `hr.employee._action_recompute_names()` to recompute stored `name` in
+  batches after changing settings.
+- Menu: HR → Configuration → Recompute Employee Names (no developer mode needed).
+
 ## Usage
 
 - Set default format in HR Settings
@@ -26,5 +33,4 @@ Defaults apply only when creating a new employee; runtime compute/inverse always
 
 ## Tests
 
-- Unit tests cover: defaults, per-employee overrides, inverse behavior, and settings impact
-
+- Unit tests cover: defaults, per-employee overrides, inverse behavior, settings impact, and concurrency/bulk updates.

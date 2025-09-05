@@ -85,21 +85,17 @@ class HrEmployee(models.Model):
         index=True,
     )
 
-    display_name = fields.Char(
-        compute="_compute_display_name",
-        store=True,
-        index=True,
-    )
+    # Use name_get instead of storing a custom display name
 
     @api.model_create_multi
     def create(self, vals_list: "list[odoo.values.hr_employee]") -> "odoo.model.hr_employee":
         for vals in vals_list:
             first = (vals.get("first_name") or "").strip()
             last = (vals.get("last_name") or "").strip()
-            if not first or not last:
-                raise ValidationError(_("Both First Name and Last Name are required."))
+            if not first and not last:
+                raise ValidationError(_("At least one of First Name or Last Name is required."))
             if not vals.get("nick_name"):
-                vals["nick_name"] = first
+                vals["nick_name"] = first or last
         recs = super().create(vals_list)
         return recs
 
@@ -142,8 +138,8 @@ class HrEmployee(models.Model):
             if vals:
                 rec.with_context(skip_name_propagation=True).write(vals)
 
-    @api.depends("name", "nick_name", "first_name", "name_format")
-    def _compute_display_name(self) -> None:
+    def name_get(self):  # type: ignore[override]
+        res = []
         for rec in self:
             nick = (rec.nick_name or "").strip()
             first = (rec.first_name or "").strip()
@@ -151,9 +147,11 @@ class HrEmployee(models.Model):
                 base = rec.name or NameFormatter.compose_legal_name(
                     rec.env, rec.first_name or "", rec.last_name or "", None, rec.name_format or None
                 )
-                rec.display_name = f"{nick} ({base})"
+                name = f"{nick} ({base})"
             else:
-                rec.display_name = rec.name or ""
+                name = rec.name or ""
+            res.append((rec.id, name))
+        return res
 
     @api.constrains("first_name", "last_name", "nick_name")
     def _check_name_parts(self) -> None:
@@ -174,3 +172,17 @@ class HrEmployee(models.Model):
             args = expression.AND([args, expression.OR([[d] for d in or_domain])])
         recs = self.search(args, limit=limit)
         return [(rec.id, rec.display_name or rec.name) for rec in recs]
+
+    @api.model
+    def _action_recompute_names(self) -> None:
+        last_id = 0
+        limit = 500
+        while True:
+            batch = self.search([("id", ">", last_id)], order="id", limit=limit)
+            if not batch:
+                break
+            # Invalidate and force recompute of stored name
+            batch.invalidate_recordset(["name"])  # type: ignore[arg-type]
+            # Force compute by reading
+            batch.mapped("name")
+            last_id = batch[-1].id
