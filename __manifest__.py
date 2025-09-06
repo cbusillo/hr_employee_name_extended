@@ -2,21 +2,12 @@
     "name": "HR Employee Name Extended",
     "version": "18.0.4.0.0",
     "category": "Human Resources",
-    "summary": "Structured first/last/nickname with locale-aware formatting, inverse writes, and robust search",
+    "summary": "Separate first/last names with flexible formatting",
     "description": """
-        Enterprise-grade name management for hr.employee with:
-        - Structured fields: first_name, last_name, nick_name (safe, opinionated defaults)
-        - Locale-aware formatting via system parameters (western/asian/custom)
-        - Stored computed legal name and friendly display name
-        - Inverse on 'name' to keep first/last synchronized for external writes
-        - Optimized name search across all fields with proper DB indexes
-        - Validation, migration hooks, and concurrency-safe updates
-
-        Designed for Odoo 18 Enterprise. No circular sync with res.users/res.partner
-        unless explicitly enabled via context.
+Manage employee names with separate first, last, and nickname fields.
+Supports different name formats for international use.
     """,
     "author": "Chris Busillo (Shiny Computers)",
-    "website": "",
     "maintainers": ["cbusillo"],
     "depends": [
         "hr",
