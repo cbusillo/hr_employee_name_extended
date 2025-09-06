@@ -13,10 +13,10 @@ class TestEmployeePerfConcurrency(TransactionCase):
         cls.Employee = cls.env["hr.employee"]
 
     def test_bulk_write(self) -> None:
-        emps = self.Employee.create([{"first_name": f"First{i}", "last_name": f"Last{i}"} for i in range(64)])
-        emps.write({"nick_name": "Bulk"})
-        for e in emps:
-            self.assertEqual(e.nick_name, "Bulk")
+        employees = self.Employee.create([{"first_name": f"First{i}", "last_name": f"Last{i}"} for i in range(64)])
+        employees.write({"nick_name": "Bulk"})
+        for employee in employees:
+            self.assertEqual(employee.nick_name, "Bulk")
 
     def test_concurrent_updates(self) -> None:
         emp = self.Employee.create({"first_name": "Concurrent", "last_name": "Test"})
