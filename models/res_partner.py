@@ -3,6 +3,7 @@ from .name_sync import _NameSyncMixin
 
 
 class ResPartner(_NameSyncMixin, models.Model):
+    _name = "res.partner"
     _inherit = "res.partner"
 
     def write(self, vals: "odoo.values.res_partner") -> bool:

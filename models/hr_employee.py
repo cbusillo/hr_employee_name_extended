@@ -61,6 +61,7 @@ class NameFormatter:
 
 
 class HrEmployee(models.Model):
+    _name = "hr.employee"
     _inherit = "hr.employee"
 
     first_name = fields.Char(index=True, tracking=True)

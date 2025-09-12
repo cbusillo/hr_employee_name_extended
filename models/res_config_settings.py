@@ -2,6 +2,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
+    _name = "res.config.settings"
     _inherit = "res.config.settings"
 
     user_name_format = fields.Selection(
