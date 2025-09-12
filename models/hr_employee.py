@@ -117,9 +117,7 @@ class HrEmployee(models.Model):
     @api.depends("first_name", "last_name", "name_format")
     def _compute_name(self) -> None:
         for rec in self:
-            rec.name = NameFormatter.compose_legal_name(
-                rec.env, rec.first_name or "", rec.last_name or "", None, rec.name_format or None
-            )
+            rec.name = NameFormatter.compose_legal_name(rec.env, rec.first_name or "", rec.last_name or "", rec.name_format or None)
 
     def _inverse_name(self) -> None:
         for rec in self:
@@ -145,7 +143,7 @@ class HrEmployee(models.Model):
             first = (rec.first_name or "").strip()
             if nick and nick != first:
                 base = rec.name or NameFormatter.compose_legal_name(
-                    rec.env, rec.first_name or "", rec.last_name or "", None, rec.name_format or None
+                    rec.env, rec.first_name or "", rec.last_name or "", rec.name_format or None
                 )
                 name = f"{nick} ({base})"
             else:
