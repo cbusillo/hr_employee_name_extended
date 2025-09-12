@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from odoo.tests import TransactionCase, tagged
 import pathlib
 
@@ -15,7 +13,8 @@ def _infer_addon_name() -> str:
         for parent in p.parents:
             if parent.name == "addons":
                 return p.parent.name
-    except Exception:
+    except (OSError, RuntimeError):
+        # Path resolution can fail in some harnesses; fall back to default
         pass
     return "hr_employee_name_extended"
 

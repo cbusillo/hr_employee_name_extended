@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from .common_imports import TransactionCase, tagged, UNIT_TAGS, MODULE_TAG
 
 

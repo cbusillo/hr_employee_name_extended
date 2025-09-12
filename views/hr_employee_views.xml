@@ -50,7 +50,8 @@
                 <field name="nick_name" string="Nickname"/>
                 <separator/>
                 <filter name="has_nickname" string="Has Nickname" domain="[('nick_name','!=',False)]"/>
-                <filter name="missing_first_or_last" string="Missing Parts" domain="['|', ('first_name','=',False), ('last_name','=',False)]"/>
+                <filter name="missing_first_or_last" string="Missing Parts"
+                        domain="['|', ('first_name','=',False), ('last_name','=',False)]"/>
             </xpath>
         </field>
     </record>

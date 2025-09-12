@@ -1,10 +1,9 @@
 from odoo import models
-from .name_sync import _NameSyncMixin
 
 
-class ResPartner(_NameSyncMixin, models.Model):
+class ResPartner(models.Model):
     _name = "res.partner"
-    _inherit = "res.partner"
+    _inherit = ["res.partner", "hr.name.sync.mixin"]
 
     def write(self, vals: "odoo.values.res_partner") -> bool:
         res = super().write(vals)

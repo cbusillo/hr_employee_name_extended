@@ -1,12 +1,10 @@
-from __future__ import annotations
-
 from odoo.exceptions import ValidationError
-from odoo.tests.common import SavepointCase
+from odoo.tests import TransactionCase
 from .common_imports import tagged, UNIT_TAGS, MODULE_TAG
 
 
 @tagged(*UNIT_TAGS, MODULE_TAG)
-class TestEmployeeName(SavepointCase):
+class TestEmployeeName(TransactionCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()

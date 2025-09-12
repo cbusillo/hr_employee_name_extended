@@ -1,11 +1,9 @@
-from __future__ import annotations
-
-from odoo.tests.common import SavepointCase
+from odoo.tests import TransactionCase
 from .common_imports import tagged, UNIT_TAGS, MODULE_TAG
 
 
 @tagged(*UNIT_TAGS, MODULE_TAG)
-class TestPerEmployeeFormat(SavepointCase):
+class TestPerEmployeeFormat(TransactionCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()

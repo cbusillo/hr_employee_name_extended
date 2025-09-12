@@ -1,6 +1,6 @@
 from odoo.api import Environment
 
-from .models.hr_employee import NameFormatter
+from .tools.name import NameFormatter
 
 
 def _initialize_employee_names(env: Environment) -> None:

@@ -1,10 +1,9 @@
 from odoo import models
-from .name_sync import _NameSyncMixin
 
 
-class ResUsers(_NameSyncMixin, models.Model):
+class ResUsers(models.Model):
     _name = "res.users"
-    _inherit = "res.users"
+    _inherit = ["res.users", "hr.name.sync.mixin"]
 
     def write(self, vals: "odoo.values.res_users") -> bool:
         res = super().write(vals)
